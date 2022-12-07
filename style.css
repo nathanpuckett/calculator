@@ -1,8 +1,58 @@
 #calc-container {
   display: flex;
   flex-direction: column;
+  height: 600px;
+  width: 400px;
+  background-color: #3f4b54;
+  gap: 2px;
+  border: 2px solid #3f4b54;
+  border-radius: 4px;
 }
 
 .row {
   display: flex;
+  flex: 1;
+  gap: 2px;
+}
+
+.row:first-child {
+  align-items: center;
+}
+
+.row > div {
+  flex: 1;
+}
+
+.bottom > div:first-child {
+  flex: 2;
+  padding-left: 2px;
+  background-color: #73787d;
+}
+
+.digits {
+  background-color: #73787d;
+}
+
+.operators {
+  background-color: #fe9f05;
+}
+
+.etc {
+  background-color: #535d65;
+}
+
+button {
+  border: none;
+  height: 100%;
+  width: 100%;
+  color: #eaebeb;
+  padding: 0;
+  font-size: 2em;
+}
+
+#display {
+  color: #eaebeb;
+  text-align: right;
+  font-size: 4em;
+  padding-right: 0.5em;
 }
