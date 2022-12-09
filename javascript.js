@@ -38,58 +38,58 @@ let operator = '';
 
 const display = document.querySelector('#display');
 
+function selectDigit(digit) {
+  if (charLimit(displayValue)) {
+    displayValue += digit;
+    display.textContent = displayValue;
+  } else {
+    return;
+  }
+}
+
 const one = document.querySelector('#one');
 one.addEventListener('click', () => {
-  displayValue += '1';
-  display.textContent = displayValue;
+  selectDigit('1');
 });
 
 const two = document.querySelector('#two');
 two.addEventListener('click', () => {
-  displayValue += '2';
-  display.textContent = displayValue;
+  selectDigit('2');
 });
 
 const three = document.querySelector('#three');
 three.addEventListener('click', () => {
-  displayValue += '3';
-  display.textContent = displayValue;
+  selectDigit('3');
 });
 
 const four = document.querySelector('#four');
 four.addEventListener('click', () => {
-  displayValue += '4';
-  display.textContent = displayValue;
+  selectDigit('4');
 });
 
 const five = document.querySelector('#five');
 five.addEventListener('click', () => {
-  displayValue += '5';
-  display.textContent = displayValue;
+  selectDigit('5');
 });
 
 const six = document.querySelector('#six');
 six.addEventListener('click', () => {
-  displayValue += '6';
-  display.textContent = displayValue;
+  selectDigit('6');
 });
 
 const seven = document.querySelector('#seven');
 seven.addEventListener('click', () => {
-  displayValue += '7';
-  display.textContent = displayValue;
+  selectDigit('7');
 });
 
 const eight = document.querySelector('#eight');
 eight.addEventListener('click', () => {
-  displayValue += '8';
-  display.textContent = displayValue;
+  selectDigit('8');
 });
 
 const nine = document.querySelector('#nine');
 nine.addEventListener('click', () => {
-  displayValue += '9';
-  display.textContent = displayValue;
+  selectDigit('9');
 });
 
 const zero = document.querySelector('#zero');
@@ -97,14 +97,25 @@ zero.addEventListener('click', () => {
   if (displayValue === '') {
     return;
   } else {
-    displayValue += '0';
-    display.textContent = displayValue;  
+    selectDigit('0');
   }
 });
+
+const decimal = document.querySelector('#decimal');
+decimal.addEventListener('click', () => {
+  if (displayValue.includes('.')) {
+    return;
+  } else {
+    selectDigit('.');
+  }
+})
 
 // Event Listeners for Operators
 
 function selectOperator(op) {
+  if (storedValue != '') {
+    macroOperate();
+  };
   storedValue = displayValue;
   displayValue = '';
   operator = op;
@@ -136,19 +147,33 @@ divButton.addEventListener('click', () => {
 
 // Equals
 
-const equalsButton = document.querySelector('#equals');
-equalsButton.addEventListener('click', () => {
-  displayValue = operate(operator, parseFloat(storedValue), parseFloat(displayValue));
+function clearOpClasses() {
   addButton.classList.remove('operator-selected');
   subButton.classList.remove('operator-selected');
   multButton.classList.remove('operator-selected');
   divButton.classList.remove('operator-selected');
-  
+}
+
+function macroOperate() {
+  displayValue = operate(operator, parseFloat(storedValue), parseFloat(displayValue));
+  clearOpClasses();
   display.textContent = displayValue;
+  storedValue = '';
+}
+
+const equalsButton = document.querySelector('#equals');
+equalsButton.addEventListener('click', () => {
+  macroOperate();
 })
 
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
+  clearOpClasses();
   displayValue = '';
+  storedValue = '';
   display.textContent = '0';
 })
+
+function charLimit(value) {
+  return (value.length < 9 ? true : false);
+}
