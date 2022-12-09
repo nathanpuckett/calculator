@@ -1,3 +1,5 @@
+// Arithmetic Functions
+
 function add(a, b) {
   return a + b;
 };
@@ -14,6 +16,8 @@ function divide(a, b) {
   return a / b;
 }
 
+// Operate Function
+
 function operate(op, a, b) {
   if (op === '+') {
     return add(a, b);
@@ -26,7 +30,11 @@ function operate(op, a, b) {
   }
 };
 
+// Event Listeners for Buttons
+
 let displayValue = '';
+let storedValue = '';
+let operator = '';
 
 const display = document.querySelector('#display');
 
@@ -93,3 +101,54 @@ zero.addEventListener('click', () => {
     display.textContent = displayValue;  
   }
 });
+
+// Event Listeners for Operators
+
+function selectOperator(op) {
+  storedValue = displayValue;
+  displayValue = '';
+  operator = op;
+}
+
+const addButton = document.querySelector('#add');
+addButton.addEventListener('click', () => {
+  selectOperator('+');
+  addButton.classList.add('operator-selected');
+})
+
+const subButton = document.querySelector('#subtract');
+subButton.addEventListener('click', () => {
+  selectOperator('-');
+  subButton.classList.add('operator-selected');
+})
+
+const multButton = document.querySelector('#multiply');
+multButton.addEventListener('click', () => {
+  selectOperator('*');
+  multButton.classList.add('operator-selected');
+})
+
+const divButton = document.querySelector('#divide');
+divButton.addEventListener('click', () => {
+  selectOperator('/');
+  divButton.classList.add('operator-selected');
+})
+
+// Equals
+
+const equalsButton = document.querySelector('#equals');
+equalsButton.addEventListener('click', () => {
+  displayValue = operate(operator, parseFloat(storedValue), parseFloat(displayValue));
+  addButton.classList.remove('operator-selected');
+  subButton.classList.remove('operator-selected');
+  multButton.classList.remove('operator-selected');
+  divButton.classList.remove('operator-selected');
+  
+  display.textContent = displayValue;
+})
+
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', () => {
+  displayValue = '';
+  display.textContent = '0';
+})
