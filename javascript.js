@@ -94,7 +94,7 @@ nine.addEventListener('click', () => {
 
 const zero = document.querySelector('#zero');
 zero.addEventListener('click', () => {
-  if (displayValue === '') {
+  if (displayValue === '0') {
     return;
   } else {
     selectDigit('0');
@@ -113,9 +113,16 @@ decimal.addEventListener('click', () => {
 // Event Listeners for Operators
 
 function selectOperator(op) {
-  if (storedValue != '') {
+  if (storedValue != '' && displayValue != '') {
     macroOperate();
   };
+
+  if (operator != '') {
+    clearOpClasses();
+    operator = op;
+    return;
+  }
+
   storedValue = displayValue;
   displayValue = '';
   operator = op;
@@ -155,22 +162,40 @@ function clearOpClasses() {
 }
 
 function macroOperate() {
-  displayValue = operate(operator, parseFloat(storedValue), parseFloat(displayValue));
   clearOpClasses();
+
+  if (displayValue === '0' && operator === '/') {
+    window.open("https://youtu.be/dQw4w9WgXcQ");
+    return;
+  }
+
+  displayValue = operate(operator, parseFloat(storedValue), parseFloat(displayValue));
+  displayValue = (Math.round(displayValue * 1000) / 1000);
+  
   display.textContent = displayValue;
   storedValue = '';
+  operator = '';
 }
 
 const equalsButton = document.querySelector('#equals');
 equalsButton.addEventListener('click', () => {
-  macroOperate();
+  if (storedValue != '' && displayValue != '') {
+    macroOperate();
+  };
 })
 
-const clearButton = document.querySelector('#clear');
-clearButton.addEventListener('click', () => {
+const clearAllButton = document.querySelector('#clear-all');
+clearAllButton.addEventListener('click', () => {
   clearOpClasses();
   displayValue = '';
   storedValue = '';
+  operator = '';
+  display.textContent = '0';
+});
+
+const clearDispButton = document.querySelector('#clear-display');
+clearDispButton.addEventListener('click', () => {
+  displayValue = '';
   display.textContent = '0';
 })
 
