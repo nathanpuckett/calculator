@@ -168,6 +168,9 @@ function macroOperate() {
 
   if (displayValue === '0' && operator === '/') {
     window.open("https://youtu.be/dQw4w9WgXcQ");
+    displayValue = '';
+    storedValue = '';
+    operator = '';
     return;
   }
 
