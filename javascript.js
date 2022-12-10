@@ -161,6 +161,8 @@ function clearOpClasses() {
   divButton.classList.remove('operator-selected');
 }
 
+
+
 function macroOperate() {
   clearOpClasses();
 
